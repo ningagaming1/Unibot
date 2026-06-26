@@ -11,25 +11,24 @@ The project serves as a comprehensive portfolio piece showcasing enterprise-leve
 UniBot’s architecture is rooted in the **Separation of Concerns (SoC)** principle. The application core remains entirely agnostic of individual module implementations. This ensures that new tools can be hot-swapped or integrated with zero regression risk to the fundamental runtime environment.
 
 ```
-                  ┌───────────────┐
+                  -----------------
                   │    main.py    │
-                  └───────┬───────┘
-                          │ (Application Boot)
+                  -----------------
+                          │ (Application Boot)                                    ▼                               
+                  -----------------                     |------------|
+                  │  Auth System  │---------------------|  Users.json|
+                  -----------------                     |------------|
+                          │ (Role Matrix Verification)  
                           ▼
-                  ┌───────────────┐
-                  │  Auth System  │
-                  └───────┬───────┘
-                          │ (Role Matrix Verification)
-                          ▼
-                  ┌───────────────┐
+                  -----------------
                   │Central Router │
-                  └───────┬───────┘
+                  -----------------
                           │
-        ┌─────────────────┼─────────────────┐
+        |-----------------|-----------------|
         ▼                 ▼                 ▼
-┌───────────────┐ ┌───────────────┐ ┌───────────────┐
+----------------- ----------------- -----------------
 │ Module: Files │ │ Module: Games │ │  Admin Panel  │
-└───────────────┘ └───────────────┘ └───────────────┘
+----------------- ----------------- -----------------
 ```
 
 ### Core Execution Flow

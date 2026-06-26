@@ -22,7 +22,7 @@ def handle(user_input, user_data):
     elif "stats" in user_input or "analysis" in user_input or "average" in user_input:
         show_stats(user_data)
     else:
-        print("🤖: I didn't quite catch that. Do you want to add, edit, delete, show report, or view stats?")
+        print("Bot: I didn't quite catch that. Do you want to add, edit, delete, show report, or view stats?")
 
 
 def setup_subjects(user_data):
@@ -30,7 +30,7 @@ def setup_subjects(user_data):
     num_input = input("How many subjects do you have?: ")
     
     if not num_input.isdigit():
-        print("🤖: Please enter a valid number next time.")
+        print("Bot: Please enter a valid number next time.")
         return
         
     num_subjects = int(num_input)
@@ -42,17 +42,17 @@ def setup_subjects(user_data):
         if sub_name != "" and sub_name not in subjects_dict:
             subjects_dict[sub_name] = [] 
         else:
-            print("⚠️ Skipped: Empty or duplicate.")
+            print(" Skipped: Empty or duplicate.")
 
     user_data["grades"] = [subjects_dict]
-    print("🤖: All set up! Go ahead and ask me to add marks now.")
+    print("Bot: All set up! Go ahead and ask me to add marks now.")
 
 def add_marks(user_data):
     print("\n--- Adding a New Test Round ---")
     subjects_dict = user_data["grades"][0]
     
     new_round_scores = {}
-    print("🤖: Please enter the marks for ALL your subjects:")
+    print("Bot: Please enter the marks for ALL your subjects:")
     
     for subject in subjects_dict.keys():
         mark_input = input(f"Enter mark for {subject.capitalize()} (0-100): ")
@@ -61,29 +61,29 @@ def add_marks(user_data):
             if mark >= 0 and mark <= 100:
                 new_round_scores[subject] = mark
             else:
-                print("⚠️ Out of range! Defaulting to 0.")
+                print(" Out of range! Defaulting to 0.")
                 new_round_scores[subject] = 0.0
         except:
-            print("⚠️ Not a number! Defaulting to 0.")
+            print(" Not a number! Defaulting to 0.")
             new_round_scores[subject] = 0.0
 
     for subject, score in new_round_scores.items():
         subjects_dict[subject].append(score)
         
-    print("🤖: Successfully added this round of marks for all subjects!")
+    print("Bot: Successfully added this round of marks for all subjects!")
 
 def add_subject(user_data):
-    print("\n--- ➕ Add a New Subject ---")
+    print("\n---  Add a New Subject ---")
     subjects_dict = user_data["grades"][0]
     
     new_sub = input("Enter the name of the new subject: ").strip().lower()
     
     if new_sub == "":
-        print("🤖: Subject name cannot be empty!")
+        print("Bot: Subject name cannot be empty!")
         return
         
     if new_sub in subjects_dict:
-        print("🤖: That subject already exists!")
+        print("Bot: That subject already exists!")
         return
 
     # Find out how many test rounds we have already recorded
@@ -100,7 +100,7 @@ def add_subject(user_data):
     for i in range(total_rounds):
         subjects_dict[new_sub].append(0.0)
 
-    print(f"🤖: Successfully added '{new_sub.capitalize()}'! It has been backfilled with 0.0 for past rounds.")
+    print(f"Bot: Successfully added '{new_sub.capitalize()}'! It has been backfilled with 0.0 for past rounds.")
 
 def edit_marks(user_data):
     print("\n--- Edit Marks ---")
@@ -109,12 +109,12 @@ def edit_marks(user_data):
     subject = input("Which subject do you want to edit?: ").strip().lower()
 
     if subject not in subjects_dict:
-        print("🤖: Subject not found.")
+        print("Bot: Subject not found.")
         return
 
     marks_list = subjects_dict[subject]
     if marks_list == []:
-        print("🤖: No marks recorded yet for this subject.")
+        print("Bot: No marks recorded yet for this subject.")
         return
 
     print(f"Current marks: {marks_list}")
@@ -127,11 +127,11 @@ def edit_marks(user_data):
         if idx >= 0 and idx < len(marks_list):
             new_mark = float(input("Enter new mark value: "))
             marks_list[idx] = new_mark
-            print("🤖: Updated successfully!")
+            print("Bot: Updated successfully!")
         else:
-            print("🤖: Invalid index number.")
+            print("Bot: Invalid index number.")
     except:
-        print("🤖: Invalid input.")
+        print("Bot: Invalid input.")
 
 def delete_subject(user_data):
     print("\n--- Delete Subject ---")
@@ -141,9 +141,9 @@ def delete_subject(user_data):
 
     if subject in subjects_dict:
         del subjects_dict[subject]
-        print(f"🤖: Deleted {subject} from the system.")
+        print(f"Bot: Deleted {subject} from the system.")
     else:
-        print("🤖: Subject not found.")
+        print("Bot: Subject not found.")
 
 def show_report(user_data):
     print("\n--- View Test Round Report ---")
@@ -154,19 +154,19 @@ def show_report(user_data):
     
     # Safety guard for old integer data
     if not isinstance(subjects_dict[first_subject], list):
-        print("🤖: You haven't added any test marks yet! Type 'add marks' to get started.")
+        print("Bot: You haven't added any test marks yet! Type 'add marks' to get started.")
         return
 
     total_rounds = len(subjects_dict[first_subject])
 
     if total_rounds == 0:
-        print("🤖: You haven't added any test marks yet! Type 'add marks' to get started.")
+        print("Bot: You haven't added any test marks yet! Type 'add marks' to get started.")
         return
 
-    print(f"🤖: You have {total_rounds} test rounds recorded.")
+    print(f"Bot: You have {total_rounds} test rounds recorded.")
     user_choice = input("Which test marks do you want me to show? (Type a number, 'last', or 'all'): ").strip().lower()
 
-    # --- 🆕 NEW 'ALL' FEATURE IMPLEMENTATION ---
+    # ---  NEW 'ALL' FEATURE IMPLEMENTATION ---
     if user_choice == "all":
         print("\n=========================================")
         print("          ALL TEST ROUNDS REPORT         ")
@@ -190,7 +190,7 @@ def show_report(user_data):
         else:
             target_idx = provided_num       
     else:
-        print("🤖: I didn't recognize that choice. Showing your latest test marks by default.")
+        print("Bot: I didn't recognize that choice. Showing your latest test marks by default.")
         target_idx = -1
 
     try:
@@ -201,7 +201,7 @@ def show_report(user_data):
             print(f"{subject.capitalize()}: {marks[target_idx]}")
         print("===============================")
     except IndexError:
-        print("🤖: ❌ That test round index doesn't exist.")
+        print("Bot: ❌ That test round index doesn't exist.")
 
 def show_stats(user_data):
     print("\n--- Grade Stats ---")
@@ -237,4 +237,4 @@ def show_stats(user_data):
         print(f"Lowest Score: {lowest}")
         print(f"Standard Deviation: {std_deviation:.2f}")
     else:
-        print("🤖: No scores found to run stats.")
+        print("Bot: No scores found to run stats.")

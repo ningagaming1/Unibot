@@ -36,11 +36,11 @@ def create_entry(user_data):
     if not os.path.exists(STORAGE_DIR):
         os.makedirs(STORAGE_DIR)
         
-    print("\n✍️ Write your thoughts below. Press Enter when finished:")
+    print("\n Write your thoughts below. Press Enter when finished:")
     content = input(":- ").strip()
     
     if not content:
-        print("⚠️ Entry was empty. Nothing saved.")
+        print(" Entry was empty. Nothing saved.")
         return
 
     # Combine the storage directory with your user-specific file naming layout
@@ -52,7 +52,7 @@ def create_entry(user_data):
             
         # Store the complete relative path in the index so read_entry knows exactly where to look
         user_data["journal"][readable_time] = filename
-        print(f"💾 Saved successfully to {filename}!")
+        print(f" Saved successfully to {filename}!")
         
     except Exception as e:
         print(f"❌ File saving operation failed: {e}")
@@ -60,10 +60,10 @@ def create_entry(user_data):
 
 def read_entry(user_data):
     if not user_data["journal"]:
-        print("📔 Your journal index is empty!")
+        print(" Your journal index is empty!")
         return
 
-    print("\n📅 Available Journal Entries:")
+    print("\n Available Journal Entries:")
     print("-" * 40)
     timestamps_list = list(user_data["journal"].keys())
     
@@ -82,7 +82,7 @@ def read_entry(user_data):
             # Open the file directly from the path stored in your json registry
             if os.path.exists(target_file):
                 with open(target_file, "r", encoding="utf-8") as file:
-                    print(f"\n📖 Entry from {target_time}:")
+                    print(f"\n Entry from {target_time}:")
                     print("=" * 40)
                     print(file.read())
                     print("=" * 40)

@@ -21,7 +21,7 @@ def add_task(user_data):
 #---------print-tasks--------
 def print_tasks(user_data):
     if not user_data["tasks"]:
-        print("📋 Your to-do list is empty!")
+        print(" Your to-do list is empty!")
         return
 
     flag = True
@@ -31,7 +31,7 @@ def print_tasks(user_data):
         
         if choice in ["all", "completed", "incompleted"]:
             flag = False  # Valid input, break the loop
-            print("\n📋 Your Tasks:")
+            print("\n Your Tasks:")
             print("-" * 30)
             
             for task_name in user_data["tasks"]:
@@ -50,10 +50,10 @@ def print_tasks(user_data):
 #----------task-completed-----
 def task_completed(user_data):
     if not user_data["tasks"]:
-        print("📋 No tasks available to mark complete.")
+        print(" No tasks available to mark complete.")
         return
 
-    print("\n📋 Your Tasks:")
+    print("\n Your Tasks:")
     print("-" * 30)
     for task_name in user_data["tasks"]:
         status = user_data["tasks"][task_name]
@@ -64,14 +64,14 @@ def task_completed(user_data):
     
     if task in user_data["tasks"]:
         user_data["tasks"][task] = True
-        print(f"🎉 Marked '{task}' as completed!")
+        print(f" Marked '{task}' as completed!")
     else:
         print("❌ Task not found in your list.")
 
 #-----------removing-tasks----
 def remove_task(user_data):
     if not user_data["tasks"]:
-        print("📋 No tasks available to remove.")
+        print(" No tasks available to remove.")
         return
 
     print("Which task do you want to completely remove?")
@@ -79,6 +79,6 @@ def remove_task(user_data):
     
     if task in user_data["tasks"]:
         del user_data["tasks"][task]  # Deletes the key-value pair completely
-        print(f"🗑️ Successfully deleted '{task}' from your list!")
+        print(f" Successfully deleted '{task}' from your list!")
     else:
         print("❌ Task not found in your list.")
