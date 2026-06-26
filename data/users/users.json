@@ -1,0 +1,50 @@
+{
+    "admin": {
+        "user_id": "1",
+        "password": "1234",
+        "username": "admin",
+        "budget": [],
+        "tasks": {
+            "make tea": true
+        },
+        "contacts": [],
+        "grades": [
+            {
+                "physics": [
+                    50.0,
+                    40.0
+                ],
+                "chemistry": [
+                    60.0,
+                    30.0
+                ],
+                "math": [
+                    70.0,
+                    40.0
+                ]
+            }
+        ],
+        "journal": {
+            "23-06-2026 11:25:34": "data\\journals\\journal_admin_20260623_112534.txt"
+        }
+    },
+    "sam": {
+        "user_id": "1",
+        "password": "5678",
+        "budget": [],
+        "tasks": {},
+        "contacts": [],
+        "grades": [],
+        "journal": {}
+    },
+    "samarpreet": {
+        "user_id": "9fcbddde-e204-4748-a1d1-3186c2c48ad1",
+        "username": "samarpreet",
+        "password": "e5e53c784d5d49de1cabb6e904bf3380026aadcb9769775a268dd304dd9aa2df",
+        "budget": [],
+        "tasks": {},
+        "contacts": [],
+        "grades": [],
+        "journal": {}
+    }
+}
