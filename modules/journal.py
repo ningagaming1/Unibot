@@ -23,7 +23,7 @@ def handle(user_input, user_data):
         read_entry(user_data)
     else:
         # Fallback if they just type "journal" without an action verb
-        print("\n📔 --- Personal Journal Module ---")
+        print("\n --- Personal Journal Module ---")
         print("Commands: 'write journal' or 'read journal'")
 
 
