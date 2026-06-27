@@ -3,7 +3,6 @@ from files import organizer
 from core import chatbot
 
 
-
 INTENTS = {
     "budget": {
         "keywords": [
@@ -107,27 +106,31 @@ INTENTS = {
 
 
 def route(user_input, user_data):
+    found = False    
+    #devide and concure
+    input_list = user_input.split("and")
+    
+    #print(INTENTS)    #dont remove this "#" if you dont know how to read through a mess 
+    
+    #cleaning and procesing the devided values
+    for input_value in input_list:
+        input_value = input_value.strip() 
 
-    input_data = user_input.lower().split("and")
-
-    for n in input_data:
-        n = n.strip()  # remove extra spaces
-
-        matched = False
-        
-        for intent_name, intent_data in INTENTS.items():
-            for keyword in intent_data["keywords"]:
-                if keyword in n:
-
-                    # call module
-                    intent_data["module"].handle(n, user_data)
-
-                    matched = True
-                    break
-
-            if matched:
-                break
-
-        if not matched:
-            print(f"❌ Could not understand: {n}")
+        for module_name,module_data in INTENTS.items():
             
+            #print(module_name)   #rremove this comment to see all the modules present
+            #print(module_data)   #remove the coment to check the format of data
+
+            for keyword in module_data["keywords"]:
+                if keyword in input_value:
+#calling module data taken from module data and send it to def handel of that modue
+                    print(f"\n----Using {module_name} module.-----")
+                    module_data["module"].handle(user_input,user_data)
+                    found = True
+                    #print("found")
+                    break
+            #this is to break the second internal loop
+            if found == True:
+                break
+    if found == False:
+        print("The bot did not understand you.")        

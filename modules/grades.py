@@ -7,6 +7,7 @@ def handle(user_input, user_data):
     # Chatbot keyword matching
     if "add" in user_input and "subject" in user_input:
         add_subject(user_data)
+    
     if "add" in user_input or "score" in user_input or "enter" in user_input:
         add_marks(user_data)
 
