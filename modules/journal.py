@@ -1,95 +1,119 @@
 import os
-import time
+import datetime
 
-# Define the storage directory path globally at the top of your file
-STORAGE_DIR = os.path.join("data", "journals")
-
-def handle(user_input, user_data):
-    """
-    This is the function called by your main router.
-    It inspects the command string to route the action locally.
-    """
-    user_input = user_input.lower().strip()
-
-    # Crucial step: Ensure the sub-dictionary exists in user_data so we don't get KeyErrors
-    if "journal" not in user_data:
-        user_data["journal"] = {}
-
-    # Local token checks
-   
-    if "write" in user_input or "new entry" in user_input:
-        create_entry(user_data)
-    elif "read" in user_input or "view" in user_input:
-        read_entry(user_data)
-    else:
-        # Fallback if they just type "journal" without an action verb
-        print("\n --- Personal Journal Module ---")
-        print("Commands: 'write journal' or 'read journal'")
+#get the file location
+storage_dir = os.path.join("data","journals") 
 
 
-def create_entry(user_data):
-    username = user_data.get("username", "default")
-    timestamp = time.strftime("%Y%m%d_%H%M%S")
-    readable_time = time.strftime("%d-%m-%Y %H:%M:%S")
+def handle(user_input,user_data):
+    #print("runing journal")
+    #print(user_input)
+    if any(word in user_input for word in ["add","write","document"]):
+        #print("runing add")
+        add_journal(user_data)
     
-    # Ensure the directory path exists on the system before trying to write files
-    if not os.path.exists(STORAGE_DIR):
-        os.makedirs(STORAGE_DIR)
+    elif any(word in user_input for word in ["read","view"]):
+        read_entery(user_data)
+
+def add_journal(user_data):
+    #geting values ready
+    now= datetime.datetime.now()
+    timestamp = now.strftime("%d%m%y_%H%M%S")
+    #print(user_data["journal"])
+    #url = f"{os.path.join('data','journals')}journal_{user_data['username']}_{time}.txt" #doesnt work as good
+    storage_dir1 = os.path.join("data","journals")
+    file_name = f"journal_{user_data["username"]}_{timestamp}.txt"
+    url = os.path.join(storage_dir1,file_name)
+    user_data["journal"][f"{now}"] = f"{url}"
+
+    #banner
+    print("----welcome--to--the--unibot---journal---")
+    print("You Can Start Writing And It Will BE Documented Automaticaly")
+    print("You can finish the documentating be using '<end>' in your sentence")
+    #writing section
+    writing = True
+    document = []
+    while writing:
+        context = input()
+
+        #puting the end to writing pannel 
+        if "<end>" in context:
+            context = context.replace("<end>","").strip()
+            document.append(context)
+            writing = False
         
-    print("\n Write your thoughts below. Press Enter when finished:")
-    content = input(":- ").strip()
-    
-    if not content:
-        print(" Entry was empty. Nothing saved.")
-        return
-
-    # Combine the storage directory with your user-specific file naming layout
-    filename = os.path.join(STORAGE_DIR, f"journal_{username}_{timestamp}.txt")
-    
-    try:
-        with open(filename, "w", encoding="utf-8") as file:
-            file.write(content)
-            
-        # Store the complete relative path in the index so read_entry knows exactly where to look
-        user_data["journal"][readable_time] = filename
-        print(f" Saved successfully to {filename}!")
-        
-    except Exception as e:
-        print(f"❌ File saving operation failed: {e}")
-
-
-def read_entry(user_data):
-    if not user_data["journal"]:
-        print(" Your journal index is empty!")
-        return
-
-    print("\n Available Journal Entries:")
-    print("-" * 40)
-    timestamps_list = list(user_data["journal"].keys())
-    
-    for index, readable_time in enumerate(timestamps_list):
-        print(f"[{index}] {readable_time}")
-    print("-" * 40)
-    
-    try:
-        choice = input("Enter the number of the entry you want to read: ").strip()
-        idx = int(choice)
-        
-        if 0 <= idx < len(timestamps_list):
-            target_time = timestamps_list[idx]
-            target_file = user_data["journal"][target_time]
-            
-            # Open the file directly from the path stored in your json registry
-            if os.path.exists(target_file):
-                with open(target_file, "r", encoding="utf-8") as file:
-                    print(f"\n Entry from {target_time}:")
-                    print("=" * 40)
-                    print(file.read())
-                    print("=" * 40)
-            else:
-                print(f"❌ The file could not be found at {target_file}")
+        #documanting the line    
         else:
-            print("❌ Invalid entry number.")
-            
-    except (ValueError, IndexError):
-        print("❌ Invalid input selection.")
+            document.append(context)
+
+    #writing it to file
+    with open(url,"w",encoding="utf-8") as file:
+        for line in document:
+            file.write(line + "\n")
+        print(f"--file-writen-to--{url}")
+    #print(user_data)
+
+def read_entery(user_data):
+    
+    #bannner 
+    print("----welcome--to--the--unibot---journal---")
+    print("Please write the index of journal file you want to read")
+    print("Tip: Use -1 for the latest journal, -2 for the previous one.")
+
+    #reading and listing all the enteres
+    try:
+        n=0
+        name_list=[]
+        for file_name in user_data["journal"]:
+            print(f"{n} --- {file_name}")
+            name_list.append(file_name)
+            n+=1
+        run_input_recever = True
+        while run_input_recever:
+            input_index = input(":- ")
+            try:
+                url = user_data["journal"][name_list[int(input_index)]]
+                with open(url,"r",encoding = "utf-8") as file:
+                    run_input_recever = False
+                    contents = file.read()
+                    print(contents)
+            except IndexError:
+                print("enter valid index")
+            except ValueError:
+                print("please enter a number")
+
+    except:
+        print("It seems like you dont have any files to view")
+
+"""
+handle("add",{
+        "user_id": "1",
+        "password": "1234",
+        "username": "admin",
+        "is_locked": True,
+        "budget": [],
+        "tasks": {
+            "make tea": True
+        },
+        "contacts": {
+            "samar": []
+        },
+        "grades": [
+            {
+                "physics": [
+                    50.0,
+                    40.0
+                ],
+                "chemistry": [
+                    60.0,
+                    30.0
+                ],
+                "math": [
+                    70.0,
+                    40.0
+                ]
+            }
+        ],
+        "journal": {}
+    })
+"""

@@ -114,7 +114,6 @@ def valid(i,j):
     if board[i][j] == " ":
         return True
     return False
-
 def handle(user_input,user_data):
     tic_tac_toe()
     #resetting the board after the game is over

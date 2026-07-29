@@ -1,5 +1,5 @@
-from modules import budget, tic_tac_toe, todo, contacts, journal, web,lpu,grades
-from files import organizer
+from modules import budget, tic_tac_toe, todo, contacts, journal, web,lpu,grades,coin
+from files import scaner
 from core import chatbot
 
 
@@ -55,7 +55,7 @@ INTENTS = {
             "sort",
             "clean"
             ],
-        "module": organizer
+        "module": scaner
     },
     "chatbot": {
     "keywords": [
@@ -91,6 +91,13 @@ INTENTS = {
         ],
     "module": lpu
     },
+    "coin":{
+        "keywords":[
+            "toss",
+            "coin"
+        ],
+        "module":coin
+    },
     "grades":{
     "keywords":[
         "grade",
@@ -125,7 +132,7 @@ def route(user_input, user_data):
                 if keyword in input_value:
 #calling module data taken from module data and send it to def handel of that modue
                     print(f"\n----Using {module_name} module.-----")
-                    module_data["module"].handle(user_input,user_data)
+                    module_data["module"].handle(input_value,user_data)
                     found = True
                     #print("found")
                     break

@@ -14,6 +14,8 @@ print("Installing dependencies...")
 
 try:
     install("pyfiglet")
+    install("phonenumbers")
+    install('pandas')
 except Exception as e:
     print("Failed to install pyfiglet:", e)
 
@@ -29,11 +31,7 @@ folders = [
     "data/users",
     "data/logs",
     "data/files_inbox",
-    "data/files_sorted/pdf",
     "data/files_sorted/txt",
-    "data/files_sorted/images",
-    "data/files_sorted/books",
-    "data/files_sorted/tests",
     "assets"
 ]
 

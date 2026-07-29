@@ -1,5 +1,8 @@
 #--------handle------------
 def handle(user_input,user_data):
+
+    print(user_data)
+
     if "add task" in user_input or "new task" in user_input:
         add_task(user_data)
     

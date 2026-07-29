@@ -42,10 +42,12 @@ def signup():
     users[username] = {
         "user_id": str(uuid.uuid4()),
         "username": username,
+        "is_locked": False ,
         "password": hashlib.sha256(password.encode()).hexdigest(),
         "budget": [],
         "tasks": {},
-        "contacts": [],
+        "journal": {},
+        "contacts": {},
         "grades": []
     }
 
