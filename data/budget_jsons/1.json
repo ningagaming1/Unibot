@@ -1,8 +1,12 @@
 {
     "current": {
-        "income": 0,
-        "expenses": {}
+        "income": 100.0,
+        "expenses": {
+            "food": 0.0,
+            "shoping": 12.0
+        }
     },
     "savings": 0,
-    "history": []
+    "history": [],
+    "file_name": "D:\\unibot\\data\\budget_jsons\\1.json"
 }

@@ -10,7 +10,8 @@ INTENTS = {
             "money",
             "expense",
             "spend",
-            "cash"
+            "cash",
+            "income"
             ],
         "module": budget
     },
@@ -113,7 +114,7 @@ INTENTS = {
 
 
 def route(user_input, user_data):
-    found = False    
+       
     #devide and concure
     input_list = user_input.split("and")
     
@@ -121,6 +122,7 @@ def route(user_input, user_data):
     
     #cleaning and procesing the devided values
     for input_value in input_list:
+        found = False 
         input_value = input_value.strip() 
 
         for module_name,module_data in INTENTS.items():

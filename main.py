@@ -17,7 +17,6 @@ def load_users():
     with open("data/users/users.json", "r", encoding="utf-8") as f:
         return json.load(f)
 
-
 # ---------- SAVE ----------
 def save_users(users):
     with open("data/users/users.json", "w", encoding="utf-8") as f:
